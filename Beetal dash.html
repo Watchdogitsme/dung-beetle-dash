@@ -2,7 +2,13 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
+  <meta name="theme-color" content="#090605" />
+  <meta name="mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <link rel="manifest" href="manifest.webmanifest" />
+  <link rel="icon" type="image/png" href="icons/icon-192.png" />
   <title>Dung Beetle Dash: 100 Tiers</title>
   <style>
     :root {
@@ -1305,6 +1311,268 @@
         grid-template-columns: 1fr;
       }
     }
+
+    /* Touch & Android Mobile Ergonomics */
+    * {
+      -webkit-tap-highlight-color: transparent;
+      -webkit-touch-callout: none;
+    }
+
+    #touch-controls-bar {
+      display: none;
+    }
+
+    #arena-joystick-ghost {
+      position: absolute;
+      width: 96px;
+      height: 96px;
+      margin-left: -48px;
+      margin-top: -48px;
+      border-radius: 50%;
+      border: 2px solid rgba(255, 224, 130, 0.34);
+      background: radial-gradient(circle, rgba(212, 168, 79, 0.14) 0%, rgba(18, 13, 11, 0.28) 70%, transparent 100%);
+      pointer-events: none;
+      opacity: 0;
+      transition: opacity 0.12s ease;
+      z-index: 6;
+    }
+
+    #arena-joystick-ghost.visible {
+      opacity: 1;
+    }
+
+    .arena-ghost-knob {
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      width: 38px;
+      height: 38px;
+      border-radius: 50%;
+      transform: translate(-50%, -50%);
+      background: radial-gradient(circle at 35% 30%, rgba(255, 243, 176, 0.72), rgba(212, 168, 79, 0.55));
+      border: 1.5px solid rgba(255, 224, 130, 0.78);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.45);
+    }
+
+    #touch-joystick-zone {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      min-height: 118px;
+      border-radius: 14px;
+      background: radial-gradient(circle at center, rgba(44, 31, 27, 0.58) 0%, rgba(14, 9, 8, 0.88) 100%);
+      border: 1px solid rgba(212, 168, 79, 0.28);
+      box-shadow: inset 0 2px 12px rgba(0, 0, 0, 0.65);
+      touch-action: none;
+      overflow: hidden;
+    }
+
+    #touch-joystick-hint {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: flex-end;
+      justify-content: center;
+      padding-bottom: 7px;
+      font-size: 0.62rem;
+      font-weight: 800;
+      letter-spacing: 1.4px;
+      color: rgba(203, 186, 175, 0.48);
+      pointer-events: none;
+      transition: opacity 0.15s ease;
+    }
+
+    #touch-joystick-zone.active #touch-joystick-hint {
+      opacity: 0.12;
+    }
+
+    #touch-joystick-base {
+      position: absolute;
+      left: 50%;
+      top: 47%;
+      width: 102px;
+      height: 102px;
+      transform: translate(-50%, -50%);
+      border-radius: 50%;
+      border: 2px solid rgba(212, 168, 79, 0.44);
+      background: radial-gradient(circle, rgba(212, 168, 79, 0.12) 0%, rgba(18, 13, 11, 0.52) 72%);
+      box-shadow: 0 0 18px rgba(0, 0, 0, 0.5), inset 0 0 12px rgba(212, 168, 79, 0.14);
+      pointer-events: none;
+    }
+
+    #touch-joystick-knob {
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      width: 44px;
+      height: 44px;
+      transform: translate(-50%, -50%);
+      border-radius: 50%;
+      background: radial-gradient(circle at 35% 30%, #fff3b0 0%, #e3ab44 52%, #8c5a18 100%);
+      border: 2px solid #ffe082;
+      box-shadow: 0 5px 14px rgba(0, 0, 0, 0.72), 0 0 12px rgba(234, 185, 92, 0.35);
+      pointer-events: none;
+    }
+
+    @media (max-width: 768px), (pointer: coarse) and (max-width: 960px) {
+      html,
+      body {
+        height: 100%;
+        height: 100dvh;
+        overflow: hidden;
+      }
+      body {
+        padding:
+          env(safe-area-inset-top, 0px)
+          env(safe-area-inset-right, 0px)
+          env(safe-area-inset-bottom, 0px)
+          env(safe-area-inset-left, 0px);
+        touch-action: manipulation;
+      }
+      #cabinet-shell {
+        width: 100%;
+        height: 100%;
+        max-width: none;
+        border-radius: 0;
+        border-width: 0;
+        padding: 6px 8px;
+        display: flex;
+        flex-direction: column;
+      }
+      .cabinet-corner {
+        display: none;
+      }
+      #play-layout {
+        display: flex;
+        flex-direction: column;
+        flex: 1;
+        min-height: 0;
+        gap: 6px;
+        width: 100%;
+      }
+      #ui-overlay {
+        order: 1;
+        height: auto;
+        gap: 5px;
+        flex-shrink: 0;
+      }
+      .hud-card {
+        padding: 5px 8px;
+        border-radius: 9px;
+      }
+      .hud-header-top {
+        margin-bottom: 3px;
+      }
+      #level-display {
+        font-size: 0.9rem;
+      }
+      .hud-icon-btn {
+        width: 34px;
+        height: 34px;
+      }
+      .progress-bar-wrap {
+        height: 17px;
+      }
+      #boss-hp-wrap {
+        height: 17px;
+        margin-top: 4px;
+      }
+      .hud-vitals-row {
+        gap: 6px;
+      }
+      .hud-mini-box {
+        flex-direction: row;
+        align-items: center;
+        justify-content: center;
+        padding: 4px 8px;
+      }
+      .hud-mini-label,
+      .hud-footer-hints {
+        display: none;
+      }
+      .lives-badge,
+      .vault-compact {
+        font-size: 0.8rem;
+        min-height: 0;
+      }
+      .hud-ledger-card {
+        padding: 4px 7px;
+        gap: 3px;
+        flex: none;
+      }
+      .ledger-header {
+        font-size: 0.62rem;
+      }
+      #powerup-dock {
+        flex-direction: row;
+        overflow-x: auto;
+        overflow-y: hidden;
+        max-height: 44px;
+        gap: 5px;
+        padding-right: 0;
+        -webkit-overflow-scrolling: touch;
+      }
+      .dock-slot-row {
+        flex: 0 0 auto;
+        min-width: 104px;
+        padding: 3px 6px;
+        grid-template-columns: 20px auto;
+        gap: 5px;
+        cursor: pointer;
+      }
+      .dock-slot-icon {
+        font-size: 1rem;
+      }
+      .dock-slot-name {
+        font-size: 0.66rem;
+      }
+      .dock-slot-sub {
+        font-size: 0.6rem;
+      }
+      .dock-slot-right {
+        display: none;
+      }
+      .dock-slot-row.empty {
+        min-width: 70px;
+        padding: 4px 6px;
+        font-size: 0.6rem;
+      }
+      #dock-tooltip {
+        top: calc(100% + 6px);
+        bottom: auto;
+        z-index: 25;
+      }
+      #arena-stage {
+        order: 2;
+        width: min(100%, calc(100dvh - 360px));
+        max-width: 520px;
+        margin: 0 auto;
+        flex-shrink: 0;
+        touch-action: none;
+      }
+      body.in-gameplay #touch-controls-bar {
+        display: flex;
+        order: 3;
+        flex: 1;
+        min-height: 112px;
+        align-items: stretch;
+        justify-content: center;
+        touch-action: none;
+      }
+      .modal-overlay {
+        padding: 12px;
+        -webkit-overflow-scrolling: touch;
+      }
+      .modal-card {
+        padding: 14px;
+      }
+      .btn-action,
+      .btn-menu-major,
+      .btn-mini-toggle,
+      .shop-tab {
+        min-height: 44px;
+      }
+    }
   </style>
 </head>
 <body>
@@ -1319,6 +1587,9 @@
       <!-- Unobstructed 560x560 Playfield -->
       <div id="arena-stage">
         <canvas id="gameCanvas" width="560" height="560"></canvas>
+        <div id="arena-joystick-ghost" aria-hidden="true">
+          <div class="arena-ghost-knob"></div>
+        </div>
       </div>
 
       <!-- Dedicated Scarab Command Sidebar -->
@@ -1385,6 +1656,16 @@
           <span><span class="keycap">Esc</span> / <span class="keycap">P</span> Pause</span>
         </div>
       </aside>
+
+      <!-- Mobile Portrait Thumbstick Zone (hidden on desktop) -->
+      <div id="touch-controls-bar" aria-label="Touch steering pad">
+        <div id="touch-joystick-zone">
+          <div id="touch-joystick-hint">DRAG TO STEER</div>
+          <div id="touch-joystick-base">
+            <div id="touch-joystick-knob"></div>
+          </div>
+        </div>
+      </div>
     </div>
 
     <!-- Main Front Menu (Live Beetle Showcase + Relic Command Panel) -->
@@ -1669,6 +1950,13 @@
     // =========================================================================
     // 2. AUDIO ENGINE (PROCEDURAL SFX & ADAPTIVE BIOME SYNTH)
     // =========================================================================
+    function triggerHaptic(pattern) {
+      if (!settings.sfx) return;
+      try {
+        if (navigator.vibrate) navigator.vibrate(pattern);
+      } catch (_) { /* ignore unsupported vibration */ }
+    }
+
     const SoundEngine = {
       ctx: null,
       musicTimer: null,
@@ -1722,6 +2010,7 @@
         } else if (kind === 'hit') {
           this.tone(175, 42, 0.24, 'sawtooth', 0.26);
           this.tone(95, 35, 0.22, 'triangle', 0.22, 0.02);
+          triggerHaptic(28);
         } else if (kind === 'shield') {
           this.tone(620, 290, 0.18, 'triangle', 0.2, 0);
           this.tone(930, 1240, 0.14, 'sine', 0.15, 0.04);
@@ -1729,6 +2018,7 @@
           [440, 554, 659, 880].forEach((f, i) => this.tone(f, f, 0.1, 'triangle', 0.15, i * 0.065));
         } else if (kind === 'levelClear') {
           [523, 659, 784, 1046].forEach((f, i) => this.tone(f, f, 0.14, 'sine', 0.16, i * 0.07));
+          triggerHaptic([14, 28, 18]);
         } else if (kind === 'telegraph') {
           this.tone(740, 880, 0.06, 'sine', 0.07);
         } else if (kind === 'stomp') {
@@ -1736,8 +2026,10 @@
         } else if (kind === 'bossHit') {
           this.tone(240, 75, 0.22, 'sawtooth', 0.22);
           this.tone(520, 880, 0.12, 'triangle', 0.14, 0.04);
+          triggerHaptic(18);
         } else if (kind === 'bossKill') {
           [392, 523, 659, 784, 1046].forEach((f, i) => this.tone(f, f * 1.02, 0.2, 'triangle', 0.18, i * 0.08));
+          triggerHaptic([20, 35, 35]);
         } else if (kind === 'reroll') {
           this.tone(420, 680, 0.09, 'sine', 0.13);
         } else if (kind === 'ui') {
@@ -1824,6 +2116,12 @@
     const bgCtx = bgCanvas.getContext('2d');
 
     const cabinetShell = document.getElementById('cabinet-shell');
+    const arenaStage = document.getElementById('arena-stage');
+    const arenaJoystickGhost = document.getElementById('arena-joystick-ghost');
+    const arenaGhostKnob = arenaJoystickGhost ? arenaJoystickGhost.querySelector('.arena-ghost-knob') : null;
+    const touchJoystickZone = document.getElementById('touch-joystick-zone');
+    const touchJoystickBase = document.getElementById('touch-joystick-base');
+    const touchJoystickKnob = document.getElementById('touch-joystick-knob');
     const uiOverlay = document.getElementById('ui-overlay');
     const powerupDock = document.getElementById('powerup-dock');
     const dockTooltip = document.getElementById('dock-tooltip');
@@ -2162,13 +2460,185 @@
     let pendingSwapChoice = null; // { key, cardTierIdx }
 
     const keys = {};
+    const touchInput = {
+      active: false,
+      pointerId: null,
+      source: null,
+      originX: 0,
+      originY: 0,
+      dx: 0,
+      dy: 0,
+      magnitude: 0
+    };
 
     // =========================================================================
-    // 5. INPUT HANDLING
+    // 5. INPUT HANDLING & ANDROID LIFECYCLE BRIDGE
     // =========================================================================
+    function resetTouchInput() {
+      touchInput.active = false;
+      touchInput.pointerId = null;
+      touchInput.source = null;
+      touchInput.dx = 0;
+      touchInput.dy = 0;
+      touchInput.magnitude = 0;
+      if (touchJoystickZone) touchJoystickZone.classList.remove('active');
+      if (touchJoystickBase) {
+        touchJoystickBase.style.left = '';
+        touchJoystickBase.style.top = '';
+      }
+      if (touchJoystickKnob) {
+        touchJoystickKnob.style.transform = 'translate(-50%, -50%)';
+      }
+      if (arenaJoystickGhost) arenaJoystickGhost.classList.remove('visible');
+      if (arenaGhostKnob) arenaGhostKnob.style.transform = 'translate(-50%, -50%)';
+    }
+
     function clearKeys() {
       for (const k in keys) keys[k] = false;
+      resetTouchInput();
     }
+
+    function bindJoystickSurface(el, source, maxRadius) {
+      if (!el) return;
+      const updateFromEvent = (e) => {
+        const rawDx = e.clientX - touchInput.originX;
+        const rawDy = e.clientY - touchInput.originY;
+        const dist = Math.hypot(rawDx, rawDy);
+        const clamped = Math.min(maxRadius, dist);
+        const nx = dist > 0.001 ? rawDx / dist : 0;
+        const ny = dist > 0.001 ? rawDy / dist : 0;
+        touchInput.dx = nx;
+        touchInput.dy = ny;
+        touchInput.magnitude = clamped / maxRadius;
+        const tx = nx * clamped;
+        const ty = ny * clamped;
+        if (source === 'pad' && touchJoystickKnob) {
+          touchJoystickKnob.style.transform = `translate(calc(-50% + ${tx}px), calc(-50% + ${ty}px))`;
+        } else if (source === 'arena' && arenaGhostKnob) {
+          if (arenaJoystickGhost && dist > 6) arenaJoystickGhost.classList.add('visible');
+          arenaGhostKnob.style.transform = `translate(calc(-50% + ${tx}px), calc(-50% + ${ty}px))`;
+        }
+      };
+
+      el.addEventListener('pointerdown', (e) => {
+        if (source === 'arena' && (!running || paused)) return;
+        if (touchInput.active) return;
+        if (e.button !== undefined && e.button !== 0 && e.pointerType === 'mouse') return;
+        e.preventDefault();
+        SoundEngine.ensureContext();
+        const rect = el.getBoundingClientRect();
+        if (source === 'pad') {
+          const pad = Math.min(34, Math.max(12, Math.min(rect.width, rect.height) * 0.25));
+          const cx = Math.max(pad, Math.min(rect.width - pad, e.clientX - rect.left));
+          const cy = Math.max(pad, Math.min(rect.height - pad, e.clientY - rect.top));
+          touchInput.originX = rect.left + cx;
+          touchInput.originY = rect.top + cy;
+          if (touchJoystickBase) {
+            touchJoystickBase.style.left = `${cx}px`;
+            touchJoystickBase.style.top = `${cy}px`;
+          }
+          if (touchJoystickZone) touchJoystickZone.classList.add('active');
+        } else {
+          const relX = e.clientX - rect.left;
+          const relY = e.clientY - rect.top;
+          touchInput.originX = e.clientX;
+          touchInput.originY = e.clientY;
+          if (arenaJoystickGhost) {
+            arenaJoystickGhost.style.left = `${relX}px`;
+            arenaJoystickGhost.style.top = `${relY}px`;
+            if (e.pointerType !== 'mouse') arenaJoystickGhost.classList.add('visible');
+          }
+        }
+        touchInput.active = true;
+        touchInput.pointerId = e.pointerId;
+        touchInput.source = source;
+        updateFromEvent(e);
+        try {
+          el.setPointerCapture(e.pointerId);
+        } catch (_) { /* ignore capture failure */ }
+      });
+
+      el.addEventListener('pointermove', (e) => {
+        if (!touchInput.active || e.pointerId !== touchInput.pointerId || touchInput.source !== source) return;
+        e.preventDefault();
+        updateFromEvent(e);
+      });
+
+      const endTouch = (e) => {
+        if (touchInput.active && e.pointerId === touchInput.pointerId && touchInput.source === source) {
+          resetTouchInput();
+        }
+      };
+      el.addEventListener('pointerup', endTouch);
+      el.addEventListener('pointercancel', endTouch);
+      el.addEventListener('lostpointercapture', endTouch);
+    }
+
+    bindJoystickSurface(touchJoystickZone, 'pad', 44);
+    bindJoystickSurface(arenaStage, 'arena', 50);
+
+    function unlockAudioOnce() {
+      SoundEngine.ensureContext();
+      window.removeEventListener('pointerdown', unlockAudioOnce);
+      window.removeEventListener('touchstart', unlockAudioOnce);
+    }
+    window.addEventListener('pointerdown', unlockAudioOnce, { passive: true });
+    window.addEventListener('touchstart', unlockAudioOnce, { passive: true });
+
+    window.onAndroidPause = function () {
+      clearKeys();
+      if (running && !paused) {
+        togglePause();
+      } else {
+        SoundEngine.stopMusic();
+      }
+      if (SoundEngine.ctx && SoundEngine.ctx.state === 'running') {
+        SoundEngine.ctx.suspend().catch(() => {});
+      }
+    };
+
+    window.onAndroidResume = function () {
+      if (SoundEngine.ctx && SoundEngine.ctx.state === 'suspended') {
+        SoundEngine.ctx.resume().catch(() => {});
+      }
+    };
+
+    window.handleAndroidBack = function () {
+      if (activeTooltipKey) {
+        hideDockTooltip();
+        return true;
+      }
+      if (running && !paused) {
+        togglePause();
+        return true;
+      }
+      if (paused && pauseModal.style.display === 'flex') {
+        togglePause();
+        return true;
+      }
+      if (
+        diffModal.style.display === 'flex' ||
+        shopModal.style.display === 'flex' ||
+        gameOverScreen.style.display === 'flex'
+      ) {
+        returnToTitle();
+        return true;
+      }
+      if (powerupModal.style.display === 'flex') {
+        if (swapPicker && swapPicker.style.display === 'flex') {
+          cancelSwapPicker();
+        } else {
+          saveAndExitFromReward();
+        }
+        return true;
+      }
+      return false;
+    };
+
+    document.addEventListener('visibilitychange', () => {
+      if (document.hidden) window.onAndroidPause();
+    });
+    window.addEventListener('pagehide', () => window.onAndroidPause());
 
     window.addEventListener('keydown', (e) => {
       const k = e.key.toLowerCase();
@@ -3290,10 +3760,13 @@
       return eq.length >= getMaxPowerSlots() && eq.every(k => isPowerupMaxed(k));
     }
 
+    let activeTooltipKey = null;
+
     function showDockTooltip(key) {
       const p = userPowerups[key];
       const def = POWER_UP_DEFS[key];
       if (!p || !def) return;
+      activeTooltipKey = key;
       const tier = TIERS[p.tierIdx];
       const val = computeSingleStat(key, p.tierIdx, p.count);
       const rareUnlocked = p.tierIdx >= 2;
@@ -3312,8 +3785,15 @@
     }
 
     function hideDockTooltip() {
+      activeTooltipKey = null;
       dockTooltip.style.display = 'none';
     }
+
+    document.addEventListener('pointerdown', (e) => {
+      if (activeTooltipKey && !powerupDock.contains(e.target) && !dockTooltip.contains(e.target)) {
+        hideDockTooltip();
+      }
+    });
 
     function renderPowerupDock() {
       powerupDock.innerHTML = '';
@@ -3358,7 +3838,11 @@
         `;
         slot.addEventListener('mouseenter', () => showDockTooltip(k));
         slot.addEventListener('mouseleave', hideDockTooltip);
-        slot.addEventListener('click', () => showDockTooltip(k));
+        slot.addEventListener('click', (e) => {
+          e.stopPropagation();
+          if (activeTooltipKey === k) hideDockTooltip();
+          else showDockTooltip(k);
+        });
         powerupDock.appendChild(slot);
       });
 
@@ -3415,6 +3899,7 @@
       pauseModal.style.display = 'none';
       gameOverScreen.style.display = 'none';
       uiOverlay.style.display = 'none';
+      document.body.classList.remove('in-gameplay');
       mainMenu.style.display = 'flex';
 
       saveCoinData();
@@ -3491,6 +3976,7 @@
       gameOverScreen.style.display = 'none';
       powerupModal.style.display = 'none';
       uiOverlay.style.display = 'flex';
+      document.body.classList.add('in-gameplay');
 
       userPowerups = {};
       const inherited = computeInheritedPreview(selectedDiffIndex);
@@ -3576,6 +4062,7 @@
       pauseModal.style.display = 'none';
       gameOverScreen.style.display = 'none';
       uiOverlay.style.display = 'flex';
+      document.body.classList.add('in-gameplay');
 
       saveCoinData();
       renderPowerupDock();
@@ -4490,13 +4977,20 @@
         }
       }
 
-      // Normalized Movement
+      // Normalized Movement (Keyboard + Analog Touch)
       let dx = 0;
       let dy = 0;
+      let moveScale = 1.0;
       if (keys['arrowup'] || keys['w']) dy -= 1;
       if (keys['arrowdown'] || keys['s']) dy += 1;
       if (keys['arrowleft'] || keys['a']) dx -= 1;
       if (keys['arrowright'] || keys['d']) dx += 1;
+
+      if (dx === 0 && dy === 0 && touchInput.active && touchInput.magnitude > 0.12) {
+        dx = touchInput.dx;
+        dy = touchInput.dy;
+        moveScale = Math.min(1, (touchInput.magnitude - 0.12) / 0.88);
+      }
 
       if (dx !== 0 || dy !== 0) {
         const len = Math.hypot(dx, dy);
@@ -4506,7 +5000,7 @@
         player.targetAngle = Math.atan2(dy, dx);
         player.angle = lerpAngle(player.angle, player.targetAngle, 14 * dt);
 
-        const activeSpeed = stats.speed * (slipstreamTimer > 0 ? 1.18 : 1.0);
+        const activeSpeed = stats.speed * (slipstreamTimer > 0 ? 1.18 : 1.0) * moveScale;
         player.x += dx * activeSpeed * dt;
         player.y += dy * activeSpeed * dt;
 
@@ -5189,6 +5683,7 @@
       clearSavedRun();
       saveCoinData();
       hideDockTooltip();
+      document.body.classList.remove('in-gameplay');
 
       if (victory) SoundEngine.play('bossKill');
 
@@ -5949,6 +6444,12 @@
     refreshResumeButton();
     refreshLegacyUI();
     startIdleLoop();
+
+    if ('serviceWorker' in navigator && location.protocol === 'https:' && location.hostname !== 'appassets.androidplatform.net') {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('./sw.js').catch(() => {});
+      });
+    }
   </script>
 </body>
 </html>

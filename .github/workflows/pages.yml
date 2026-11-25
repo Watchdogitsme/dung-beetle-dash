@@ -21,6 +21,11 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
+      - name: Validate HTML game script syntax
+        run: |
+          python3 -c 'import re; html = open("Beetal dash.html", encoding="utf-8").read(); m = re.findall(r"<script>([\s\S]*?)</script>", html); assert m, "Missing <script>"; open("/tmp/game_check.js", "w", encoding="utf-8").write(m[-1])'
+          node --check /tmp/game_check.js
+
       - name: Setup Pages
         uses: actions/configure-pages@v5
 
@@ -28,6 +33,7 @@ jobs:
         run: |
           mkdir -p _site
           cp "Beetal dash.html" _site/index.html
+          cp -r pwa/. _site/
           touch _site/.nojekyll
 
       - name: Upload Pages artifact

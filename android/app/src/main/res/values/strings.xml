@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Dung Beetle Dash</string>
+    <string name="back_exit_prompt">Press back again to exit</string>
+</resources>

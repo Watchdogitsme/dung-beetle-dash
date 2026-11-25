@@ -16,3 +16,13 @@ Thumbs.db
 *.swp
 *.bak
 *.log
+
+# Android build & signing secrets (never commit keystores or local SDK paths)
+*.jks
+*.keystore
+keystore.properties
+android/local.properties
+android/.gradle/
+android/build/
+android/app/build/
+android/.idea/

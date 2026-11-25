@@ -1,0 +1,25 @@
+{
+  "name": "Dung Beetle Dash: 100 Tiers",
+  "short_name": "Beetle Dash",
+  "description": "Single-file HTML5 Canvas arcade action game with 100 tiers, 5 biomes, bosses, mutations, and Evolution Lab.",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#090605",
+  "theme_color": "#090605",
+  "icons": [
+    {
+      "src": "icons/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "icons/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}
